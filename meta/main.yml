@@ -21,7 +21,6 @@ galaxy_info:
   galaxy_tags:
     - system
     - security
-    - fail2ban
     - automatic
     - updates
     - yum

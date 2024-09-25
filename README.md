@@ -6,7 +6,6 @@
 
 That being said, this role performs some basic security configuration on RedHat and Debian-based linux systems. It attempts to:
 
-  - Install software to monitor bad SSH access (fail2ban)
   - Configure SSH to be more secure (disabling root login, requiring key-based authentication, and allowing a custom SSH port to be set)
   - Set up automatic updates (if configured to do so)
 
@@ -96,14 +95,6 @@ Whether to install/enable `yum-cron` (RedHat-based systems) or `unattended-upgra
     security_autoupdate_mail_on_error: true
 
 (Debian/Ubuntu only) If `security_autoupdate_mail_to` is set to an non empty value, unattended upgrades will send an e-mail to that address when some error occurs. You may either set this to a full email: `ops@example.com` or to something like `root`, which will use `/etc/aliases` to route the message. If you set `security_autoupdate_mail_on_error` to `false` you'll get an email after every package install.
-
-    security_fail2ban_enabled: true
-
-Whether to install/enable `fail2ban`. You might not want to use fail2ban if you're already using some other service for login and intrusion detection (e.g. [ConfigServer](http://configserver.com/cp/csf.html)).
-
-    security_fail2ban_custom_configuration_template: "jail.local.j2"
-
-The name of the template file used to generate `fail2ban`'s configuration.
 
 ## Dependencies
 
