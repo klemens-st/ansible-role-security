@@ -8,6 +8,7 @@ Unattended-Upgrade::MailOnlyOnError "true";
 {% endif %}
 {% endif %}
 
+{% if security_autoupdate_additional_origins %}
 Unattended-Upgrade::Allowed-Origins {
         "${distro_id} ${distro_codename}-security";
 //      "${distro_id} ${distro_codename}-updates";
@@ -15,9 +16,12 @@ Unattended-Upgrade::Allowed-Origins {
         "{{ origin }}";
 {% endfor %}
 };
+{% endif %}
 
+{% if security_autoupdate_blacklist %}
 Unattended-Upgrade::Package-Blacklist{
 {% for package in security_autoupdate_blacklist %}
       "{{package}}";
 {% endfor %}
 }
+{% endif %}

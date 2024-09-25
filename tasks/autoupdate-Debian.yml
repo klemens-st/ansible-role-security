@@ -12,5 +12,5 @@
     group: root
     mode: 0644
   with_items:
-    - 10periodic
-    - 50unattended-upgrades
+    - 20auto-upgrades
+    - 51unattended-upgrades-custom
