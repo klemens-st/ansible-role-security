@@ -5,7 +5,7 @@
     state: "{{ security_sshd_state }}"
 
 - name: Update SSH configuration to be more secure.
-  ansible.builtin.lineinfile:
+  ansible.builtin.template:
     src: 01-ansible-hardening.conf.j2
     dest: "{{ security_ssh_config_path }}/01-ansible-hardening.conf"
     state: present
@@ -24,6 +24,8 @@
     create: true
     validate: 'sshd -T -f %s'
     mode: 0644
+    owner: root
+    group: root
   when: security_ssh_allowed_users | length > 0
   notify: restart ssh
 
@@ -36,27 +38,31 @@
     create: true
     validate: 'sshd -T -f %s'
     mode: 0644
+    owner: root
+    group: root
   when: security_ssh_allowed_groups | length > 0
   notify: restart ssh
 
 - name: Add configured user accounts to passwordless sudoers.
-  lineinfile:
-    dest: /etc/sudoers
-    regexp: '^{{ item }}'
-    line: '{{ item }} ALL=(ALL) NOPASSWD: ALL'
+  ansible.builtin.template:
+    src: passwordless.j2
+    dest: /etc/sudoers.d/passwordless
     state: present
     validate: 'visudo -cf %s'
-    mode: 0440
+    mode: 0640
+    owner: root
+    group: root
   with_items: "{{ security_sudoers_passwordless }}"
   when: security_sudoers_passwordless | length > 0
 
 - name: Add configured user accounts to passworded sudoers.
-  lineinfile:
-    dest: /etc/sudoers
-    regexp: '^{{ item }}'
-    line: '{{ item }} ALL=(ALL) ALL'
+  ansible.builtin.template:
+    src: passworded.j2
+    dest: /etc/sudoers.d/passworded
     state: present
     validate: 'visudo -cf %s'
-    mode: 0440
+    mode: 0640
+    owner: root
+    group: root
   with_items: "{{ security_sudoers_passworded }}"
   when: security_sudoers_passworded | length > 0
