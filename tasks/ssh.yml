@@ -25,7 +25,7 @@
     mode: 0644
     owner: root
     group: root
-  when: security_ssh_allowed_users | length > 0
+  when: security_ssh_allowed_users | length > 0 #TODO: improve idempotency
   notify: restart ssh
 
 - name: Add configured groups allowed to connect over ssh
