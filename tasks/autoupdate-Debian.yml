@@ -14,3 +14,18 @@
   with_items:
     - 20auto-upgrades
     - 51unattended-upgrades-custom
+
+- name: Install needrestart.
+  ansible.builtin.apt:
+    name: needrestart
+    state: present
+  when: security_autoupdate_restart_services | bool
+
+- name: Ensure services are restarted automatically after upgrades.
+  ansible.builtin.template:
+    src: autorestart.conf
+    dest: "/etc/needrestart/conf.d/autorestart.conf"
+    owner: root
+    group: root
+    mode: "0644"
+  when: security_autoupdate_restart_services | bool
