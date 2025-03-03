@@ -12,7 +12,9 @@
     mode: 0644
     owner: root
     group: root
-  notify: "{{ security_sshd_handlers }}"
+  notify:
+    - reload systemd
+    - restart ssh
 
 - name: Add configured users allowed to connect over ssh
   ansible.builtin.lineinfile:

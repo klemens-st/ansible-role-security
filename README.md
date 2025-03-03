@@ -1,6 +1,6 @@
 # Ansible Role: Security (Basics)
 
-[![CI](https://github.com/geerlingguy/ansible-role-security/workflows/CI/badge.svg?event=push)](https://github.com/geerlingguy/ansible-role-security/actions?query=workflow%3ACI)
+[![CI](https://github.com/geerlingguy/ansible-role-security/actions/workflows/ci.yml/badge.svg)](https://github.com/geerlingguy/ansible-role-security/actions/workflows/ci.yml)
 
 **First, a major, MAJOR caveat**: the security of your servers is YOUR responsibility. If you think simply including this role and adding a firewall makes a server secure, then you're mistaken. Read up on Linux, network, and application security, and know that no matter how much you know, you can always make every part of your stack more secure.
 
@@ -80,10 +80,9 @@ Debian only: whether services should be restarted automatically after updates wh
 (Debian/Ubuntu only) A listing of packages that should not be automatically updated.
 
     security_autoupdate_additional_origins: []
-    # - "${distro_id}ESM:${distro_codename}-infra-security"
-    # - "Docker:${distro_codename}"
+    # - "origin=Docker,archive=${distro_codename}"
 
-(Debian/Ubuntu only) A listing of origins to reference.
+(Debian/Ubuntu only) A listing of additional origins to automatically update.
 
     security_autoupdate_reboot: false
 
